@@ -5,7 +5,7 @@ const restricted = require("../middleware/restricted")
 
 const router = express.Router()
 
-router.get('/', restricted, async (req, res, next) => {
+router.get('/', restricted, checkRole("admin"), async (req, res, next) => {
     try {
         const users = await userModel.find()
 
@@ -14,5 +14,15 @@ router.get('/', restricted, async (req, res, next) => {
         next (err)
     }
 })
+
+function checkRole(role) {
+    return function(req, res, next) {
+        if(req.token && role === req.token.role) {
+            next()
+        } else {
+            return res.status(403).json({ message: "You are not authorized." })
+        }
+    }
+}
 
 module.exports = router

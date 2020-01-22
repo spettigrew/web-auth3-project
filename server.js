@@ -27,4 +27,4 @@ server.use((err, req, res, next) => {
     res.status(500).json({ message: "Incorrect, check your work." })
 })
 
-module.export = server;
+module.exports = server;

@@ -5,7 +5,7 @@ const restricted = require("../middleware/restricted")
 
 const router = express.Router()
 
-router.get('/', restricted, checkRole("admin"), async (req, res, next) => {
+router.get('/', restricted, authorizeUser("admin"), async (req, res, next) => {
     try {
         const users = await userModel.find()
 
@@ -14,8 +14,8 @@ router.get('/', restricted, checkRole("admin"), async (req, res, next) => {
         next (err)
     }
 })
-
-function checkRole(role) {
+// single role
+function authorizeUser(role) {
     return function(req, res, next) {
         if(req.token && role === req.token.role) {
             next()
@@ -24,5 +24,17 @@ function checkRole(role) {
         }
     }
 }
+
+// Set up functions for each access, i.e. user, student and teacher for example. Used for an array of roles as said above.
+
+// function authorizeUser(role) {
+//     return function (req, res, next) {
+//         if (req.token && role && req.token.roles.includes(role)) {
+//             next()
+//         } else {
+//             return res.status(403).json({ message: "You are not authorized." })
+//         }
+//     }
+// }
 
 module.exports = router

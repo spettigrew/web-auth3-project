@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const secret = require("../data/db-config")
+const config = require("../config/secrets")
 
 function signToken(user) {
     const payload = {
@@ -8,10 +8,7 @@ function signToken(user) {
         role: "student",
     }
 
-    const options = {
-        expiresIn: "2h"
-    }
-    return jwt.sign(payload, secret.jwtSecret, options)
+    return jwt.sign(payload, config.jwtSecret, config.options)
 }
 
-module.exports = signToken;
+module.exports = signToken

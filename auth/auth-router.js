@@ -49,14 +49,48 @@ router.get("/protected", restricted, async (req, res, next) => {
     }
 })
 
-router.get("/logout", restricted, (req, res, next) => {
-   req.jwt.destroy((err) => {
-       if (err) {
-           next(err)
-       } else {
-           return res.status(200).json({ message: "Successfully logged out."})
-       }
-   })
-})
+// can't logout users with JWT's since they are stateless.
+
+// router.get("/logout", restricted, (req, res, next) => {
+//    req.jwt.destroy((err) => {
+//        if (err) {
+//            next(err)
+//        } else {
+//            return res.status(200).json({ message: "Successfully logged out."})
+//        }
+//    })
+// })
 
 module.exports = router
+
+// Notes from Jason's code.
+// router.post("/login", async (req, res, next) => {
+//     try {
+//         const { username, password } = req.body
+//         const user = await usersModel.findBy({ username }).first()
+//         // since bcrypt hashes generate different results due to the salting,
+//         // we rely on the magic internals to compare hashes (rather than doing
+//         // it manually by re-hashing and comparing)
+//         const passwordValid = await bcrypt.compare(password, user.password)
+
+//         if (user && passwordValid) {
+//             const token = jwt.sign({
+//                 subject: user.id,
+//                 username: user.username,
+//             }, secrets.jwt, {
+//                 expiresIn: "7d",
+//             })
+
+//             res.status(200).json({
+//                 message: `Welcome ${user.username}!`,
+//                 token: token,
+//             })
+//         } else {
+//             res.status(401).json({
+//                 message: "Invalid Credentials",
+//             })
+//         }
+//     } catch (err) {
+//         next(err)
+//     }
+// })

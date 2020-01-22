@@ -1,7 +1,8 @@
 const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
-const jwt = require("jsonwebtoken")
+// const jwt = require("jsonwebtoken")
+// const dbConfig = require("./data/db-config")
 
 const authRouter = require("./auth/auth-router")
 const userRouter = require("./users/user-router")

@@ -1,12 +1,5 @@
 const jwt = require("jsonwebtoken")
 
-// module.export = (req, res, next) => {
-//     if (!req.jwt && !req.jwt.user) {
-//         res.status(401).json({ message: "Incorrect credentials provided."})
-//     } else {
-//         next()
-//     }
-// }
 
 module.exports = (req, res, next) => {
     const { authorization } = req.headers
@@ -27,4 +20,4 @@ module.exports = (req, res, next) => {
     return res.status(400).json({ message: "Login and try again."})
  }
 }
-
+// jwt is a synchronous function; does not need async/await.

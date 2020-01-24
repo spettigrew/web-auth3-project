@@ -1,15 +1,16 @@
 const jwt = require("jsonwebtoken")
-const secrets = require("../config/secrets")
+const jwtConfig = require("../config/jwtConfig")
 
 
 module.exports = (req, res, next) => {
     const { authorization } = req.headers
 
     if (authorization) {
-    const secret = process.env.JWT_SECRET || "is your secret safe?"
+    // const secret = process.env.JWT_SECRET || "is your secret safe?" Replaced by jwtSecret
 
-    jwt.verify(authorization, secret, function(err, decodedToken) {
+    jwt.verify(authorization, jwtConfig.jwtSecret, function(err, decodedToken) {
         if (err) {
+            console.log(err)
             return res.status(401).json({ message: "Invalid token." })
         } else {
             req.token = decodedToken

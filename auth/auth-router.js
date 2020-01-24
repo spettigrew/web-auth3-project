@@ -9,7 +9,7 @@ const router = express.Router()
 
 router.post("/register", async (req, res, next) => {
     try {
-        const savedUser = await userModel.add(req.body)
+        const savedUser = await UserModel.add(req.body)
         return res.status(201).json(savedUser)
     } catch (err) {
         next (err)
@@ -28,7 +28,7 @@ router.post("/login", async (req, res, next) => {
 
             return res.status(200).json({ 
             token, 
-            message: `Welcome ${ user.username}!`})
+            message: `Welcome ${user.username}!`})
 
     } else {
         return res.status(401).json({ message: "Invalid Credentials, you may not continue forward." })

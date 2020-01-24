@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const config = require("../config/secrets")
+const config = require("../config/jwtConfig")
 
 function signToken(user) {
     const payload = {

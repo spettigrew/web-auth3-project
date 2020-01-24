@@ -5,7 +5,7 @@ const restricted = require("../middleware/restricted")
 
 const router = express.Router()
 
-router.get('/', restricted, authorizeUser("admin"), async (req, res, next) => {
+router.get('/', restricted, authorizeUser("student"), async (req, res, next) => {
     try {
         const users = await userModel.find()
 
@@ -20,6 +20,8 @@ function authorizeUser(role) {
         if(req.token && role === req.token.role) {
             next()
         } else {
+            console.log(req.token)
+            console.log(role)
             return res.status(403).json({ message: "You are not authorized." })
         }
     }
